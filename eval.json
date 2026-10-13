@@ -1,0 +1,396 @@
+[
+ {
+  "id": "Q1",
+  "question": "When does a small merchant receive UPI money?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "T+1 (next working day) by default; T+0 same day by 11:59 PM only with the Instant Settlement add-on (circular A replaced master 1.1 from 1 Aug 2026).",
+  "must_contain": [
+   "T+1",
+   "T+0",
+   "Instant Settlement"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "A"
+   ],
+   [
+    "policy_master_v1.md",
+    "1.1"
+   ]
+  ],
+  "adversarial": false
+ },
+ {
+  "id": "Q2",
+  "question": "A large merchant (above Rs.10 lakh monthly) receives a Rs.4,000 UPI payment. What MDR and GST do they pay?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "MDR 0.50% of 4,000 = Rs.20.00 (under the new Rs.25 cap); GST 18% = Rs.3.60; total Rs.23.60.",
+  "must_contain": [
+   "₹20.00",
+   "₹3.60",
+   "₹23.60"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "2.2"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "C"
+   ],
+   [
+    "policy_master_v1.md",
+    "2.4"
+   ]
+  ],
+  "adversarial": false
+ },
+ {
+  "id": "Q3",
+  "question": "Same merchant, a Rs.1,50,000 payment. What do they pay?",
+  "as_of_date": "2026-08-15",
+  "context": {
+   "merchant_size": "large"
+  },
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "Fee arithmetic: 0.50% = Rs.750, capped at Rs.25, GST Rs.4.50, total Rs.29.50. BUT Rs.1,50,000 is above the Rs.1,00,000 per-transaction limit, so it is only allowed for Capital Markets/Insurance merchants with enhanced KYC.",
+  "must_contain": [
+   "₹25.00",
+   "₹4.50",
+   "₹29.50",
+   "per-transaction"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "C"
+   ],
+   [
+    "policy_master_v1.md",
+    "4.1"
+   ],
+   [
+    "policy_master_v1.md",
+    "4.2"
+   ],
+   [
+    "policy_master_v1.md",
+    "4.4"
+   ]
+  ],
+  "adversarial": true
+ },
+ {
+  "id": "Q4a",
+  "question": "A merchant refunds a customer 3 hours after the sale. Do they get the MDR back?",
+  "as_of_date": "2026-08-20",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "Yes. Clause 3.3 (full reversal within 24h) is still in force on 20 Aug; circular D only deletes it from 1 Sep 2026.",
+  "must_contain": [
+   "Yes",
+   "reversed in full"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "3.3"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "D"
+   ]
+  ],
+  "adversarial": true
+ },
+ {
+  "id": "Q4b",
+  "question": "A merchant refunds a customer 3 hours after the sale. Do they get the MDR back?",
+  "as_of_date": "2026-09-05",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "No. Circular D deleted clause 3.3 from 1 Sep 2026; clause 3.2 now applies without exception.",
+  "must_contain": [
+   "No",
+   "not returned"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "D"
+   ],
+   [
+    "policy_master_v1.md",
+    "3.2"
+   ]
+  ],
+  "adversarial": true
+ },
+ {
+  "id": "Q5",
+  "question": "What does the FAQ say about the MDR cap, and is the FAQ right?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "FAQ says there is no upper limit. Wrong: clause 2.3 caps MDR at Rs.15 (since 1 Jan 2026); from 1 Aug it is Rs.15 for small and Rs.25 for large merchants (circular C).",
+  "must_contain": [
+   "WRONG",
+   "₹15",
+   "₹25"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "2.3"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "C"
+   ]
+  ],
+  "adversarial": true
+ },
+ {
+  "id": "Q6",
+  "question": "Can a customer pay Rs.1,00,000 twice in one day to a merchant?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "No. Daily limit per customer account is Rs.1,00,000 across all UPI transactions (4.3, as amended by circular E to also respect the customer's bank limit).",
+  "must_contain": [
+   "No",
+   "daily limit",
+   "₹2,00,000"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "4.3"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "E"
+   ]
+  ],
+  "adversarial": false
+ },
+ {
+  "id": "Q7",
+  "question": "I closed my account yesterday. When will I get my money?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "ANSWERED",
+  "expected_answer": "Within 10 working days of closure after dues (5.2): 26 Aug 2026 if no bank holidays (list not provided); also flags the 30-day notice rule (5.1).",
+  "must_contain": [
+   "10 working days",
+   "26 Aug 2026",
+   "30 days"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "5.2"
+   ],
+   [
+    "policy_master_v1.md",
+    "5.1"
+   ]
+  ],
+  "adversarial": false
+ },
+ {
+  "id": "Q8",
+  "question": "Does the policy allow me to settle card payments same day?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "ANSWERED",
+  "expected_answer": "No. Cards settle T+2 (1.2); the T+0 add-on in circular A is UPI only.",
+  "must_contain": [
+   "No",
+   "T+2"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "1.2"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "A"
+   ]
+  ],
+  "adversarial": false
+ },
+ {
+  "id": "E9",
+  "question": "The FAQ says I get my fee back if I refund within 24 hours. Is that still true?",
+  "as_of_date": "2026-09-02",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "No, the FAQ is stale: circular D deleted clause 3.3 from 1 Sep 2026.",
+  "must_contain": [
+   "OUTDATED",
+   "deleted"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "D"
+   ],
+   [
+    "policy_master_v1.md",
+    "3.2"
+   ]
+  ],
+  "adversarial": true,
+  "why": "Stale FAQ, and the date matters."
+ },
+ {
+  "id": "E10",
+  "question": "Under clause 3.3 I refunded 2 hours after the sale. Do I get my MDR back?",
+  "as_of_date": "2026-09-10",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "No. Clause 3.3 no longer exists from 1 Sep 2026.",
+  "must_contain": [
+   "No",
+   "deleted"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "D"
+   ]
+  ],
+  "adversarial": true,
+  "why": "Deleted clause quoted by the user."
+ },
+ {
+  "id": "E11",
+  "question": "What is the MDR on card payments?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CANNOT_ANSWER",
+  "expected_answer": "Documents only define MDR for UPI. Must not guess.",
+  "must_contain": [
+   "only define MDR for UPI"
+  ],
+  "expected_citations": [],
+  "adversarial": true,
+  "why": "Missing information; a naive system would reuse the UPI rate."
+ },
+ {
+  "id": "E12",
+  "question": "Since the Rs.15 MDR cap was scrapped in August, what do I pay on a Rs.1,00,000 UPI payment as a large merchant?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "Premise is false: the cap was raised to Rs.25 for large merchants, not removed. MDR Rs.25.00, GST Rs.4.50.",
+  "must_contain": [
+   "has not been removed",
+   "₹25.00",
+   "₹4.50"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "C"
+   ],
+   [
+    "policy_master_v1.md",
+    "2.3"
+   ]
+  ],
+  "adversarial": true,
+  "why": "False premise."
+ },
+ {
+  "id": "E13",
+  "question": "What was the UPI settlement time?",
+  "as_of_date": "2025-12-15",
+  "expected_status": "CANNOT_ANSWER",
+  "expected_answer": "No document is in force before 1 Jan 2026.",
+  "must_contain": [
+   "1 Jan 2026"
+  ],
+  "expected_citations": [],
+  "adversarial": true,
+  "why": "Date before the policy exists."
+ },
+ {
+  "id": "E14",
+  "question": "Can I get same-day UPI settlement?",
+  "as_of_date": "2026-07-25",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "No. On 25 Jul 2026 UPI is T+1 (master 1.1); circular A's T+0 add-on only starts on 1 Aug 2026.",
+  "must_contain": [
+   "did not exist yet",
+   "T+1"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "1.1"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "A"
+   ]
+  ],
+  "adversarial": true,
+  "why": "Date before the amendment: a naive system quotes the newest clause."
+ },
+ {
+  "id": "E15",
+  "question": "A merchant with monthly volume of exactly Rs.10 lakh gets a Rs.8,000 UPI payment. What are MDR and GST?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CONFLICT_RESOLVED",
+  "expected_answer": "Exactly 10 lakh is 'up to 10 lakh' = small. 0.25% = Rs.20 but cap Rs.15 applies, so MDR Rs.15.00, GST Rs.2.70.",
+  "must_contain": [
+   "₹15.00",
+   "₹2.70",
+   "small merchant"
+  ],
+  "expected_citations": [
+   [
+    "circular_2026_08_amendment.md",
+    "B"
+   ],
+   [
+    "circular_2026_08_amendment.md",
+    "C"
+   ]
+  ],
+  "adversarial": true,
+  "why": "Boundary value, and the cap bites for a small merchant."
+ },
+ {
+  "id": "E16",
+  "question": "What documents do I need for enhanced KYC (Annexure C)?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "CANNOT_ANSWER",
+  "expected_answer": "Annexure C is referenced but not provided.",
+  "must_contain": [
+   "Annexure C is not part"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "4.4"
+   ]
+  ],
+  "adversarial": true,
+  "why": "Missing information (referenced annexure absent)."
+ },
+ {
+  "id": "E17",
+  "question": "How long does a customer's bank have to raise a chargeback?",
+  "as_of_date": "2026-08-15",
+  "expected_status": "ANSWERED",
+  "expected_answer": "120 days (3.4).",
+  "must_contain": [
+   "120 days"
+  ],
+  "expected_citations": [
+   [
+    "policy_master_v1.md",
+    "3.4"
+   ]
+  ],
+  "adversarial": false
+ }
+]
