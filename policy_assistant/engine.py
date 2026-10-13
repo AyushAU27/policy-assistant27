@@ -30,7 +30,7 @@ DEFAULT_AS_OF = date(2026, 8, 15)
 POLICY_START = date(2026, 1, 1)
 
 
-# --------------------------------------------------------------------------- formatting
+
 def _group_indian(n: int) -> str:
     s = str(n)
     if len(s) <= 3:
@@ -64,7 +64,7 @@ def _q2(x: Decimal) -> Decimal:
     return x.quantize(Decimal("0.01"), ROUND_HALF_UP)
 
 
-# --------------------------------------------------------------------------- result type
+
 @dataclass
 class Answer:
     question: str
@@ -72,8 +72,8 @@ class Answer:
     answer: str
     status: str
     citations: list[Citation] = field(default_factory=list)
-    resolution: str | None = None          # "how" when status is CONFLICT_RESOLVED
-    context: dict = field(default_factory=dict)   # facts a follow-up question can reuse
+    resolution: str | None = None
+    context: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return {
@@ -95,7 +95,7 @@ class Answer:
         return "\n".join(out)
 
 
-# --------------------------------------------------------------------------- bookkeeping
+
 _RANK = {"applied": 0, "superseded": 1, "upcoming": 2, "context": 3}
 
 
@@ -146,7 +146,7 @@ def cannot(as_of: date, why: str, cites: list[Citation] | None = None) -> Answer
     return Answer("", as_of, why, CANNOT_ANSWER, cites or [])
 
 
-# --------------------------------------------------------------------------- question object
+
 @dataclass
 class Q:
     raw: str
@@ -157,7 +157,7 @@ class Q:
     context: dict
 
 
-# --------------------------------------------------------------------------- MDR / fees
+
 def _tier_label(tier: str, as_of: date) -> str:
     return ("a large merchant (monthly UPI volume above ₹10 lakh)" if tier == "large"
             else "a small merchant (monthly UPI volume up to ₹10 lakh)")
@@ -247,7 +247,7 @@ def mdr_intent(q: Q, t: Trace) -> Answer:
     return t.finish(text)
 
 
-# --------------------------------------------------------------------------- refunds
+
 def refund_intent(q: Q, t: Trace) -> Answer:
     low = q.low
     if re.search(r"how long|deadline|window|last date|time limit|by when|within how|how many days", low) \
@@ -289,7 +289,7 @@ def refund_intent(q: Q, t: Trace) -> Answer:
     return t.finish(text)
 
 
-# --------------------------------------------------------------------------- settlement
+
 def settlement_intent(q: Q, t: Trace) -> Answer:
     low = q.low
     has_card = bool(re.search(r"\bcards?\b|credit|debit", low))
@@ -324,7 +324,7 @@ def settlement_intent(q: Q, t: Trace) -> Answer:
     return t.finish("\n".join(parts))
 
 
-# --------------------------------------------------------------------------- limits
+
 def limit_intent(q: Q, t: Trace) -> Answer:
     low = q.low
     one = t.use("per_txn_limit").value
@@ -358,7 +358,7 @@ def limit_intent(q: Q, t: Trace) -> Answer:
         else:
             text = f"The daily limit per customer account is {inr(cap)} across all UPI transactions (clause 4.3).{bank}"
         return t.finish(text)
-    # per-transaction
+
     two = t.use("enhanced_txn_limit").value
     if amounts:
         amount = amounts[0]
@@ -383,7 +383,7 @@ def limit_intent(q: Q, t: Trace) -> Answer:
     return t.finish(text)
 
 
-# --------------------------------------------------------------------------- closure
+
 def add_working_days(start: date, n: int, holidays: frozenset = frozenset()) -> date:
     """Policy (clause 1.1) says working days exclude Sundays and bank holidays. No holiday list is
     provided, so by default only Sundays are skipped (Saturdays count)."""
@@ -399,7 +399,7 @@ def add_working_days(start: date, n: int, holidays: frozenset = frozenset()) -> 
 def closure_intent(q: Q, t: Trace) -> Answer:
     notice = t.use("closure_notice_days").value
     days = int(t.use("closure_payout_working_days").value)
-    t.cite(D.MASTER, "1.1", "context")   # where "working days exclude Sundays and bank holidays" is defined
+    t.cite(D.MASTER, "1.1", "context")
     closed_on = relative_date(q.low, q.as_of)
     only_notice = bool(re.search(r"\bnotice\b", q.low)) and not closed_on
     if only_notice:
@@ -422,14 +422,14 @@ def closure_intent(q: Q, t: Trace) -> Answer:
     return t.finish(text)
 
 
-# --------------------------------------------------------------------------- chargebacks
+
 def chargeback_intent(q: Q, t: Trace) -> Answer:
     v = t.use("chargeback_days")
     return t.finish(f"A chargeback dispute must be raised by the customer's bank within {v.value:.0f} days "
                     f"(clause 3.4). The documents don't say how long the merchant then has to respond.")
 
 
-# --------------------------------------------------------------------------- FAQ audit
+
 FAQ_Q = {
     "fee": "What do I pay on a UPI transaction?",
     "refund": "If a customer asks for a refund the same day, do I get my fee back?",
@@ -517,7 +517,7 @@ def faq_intent(q: Q, t: Trace) -> Answer:
     return t.finish("\n\n".join(out), extra_resolution=resolution)
 
 
-# --------------------------------------------------------------------------- router
+
 def route(q: Q, t: Trace) -> Answer:
     low = q.low
     if re.search(r"\bfaq\b", low):

@@ -10,7 +10,7 @@ def main() -> None:
     p.add_argument("question", nargs="?")
     p.add_argument("--date", help="as-of date, YYYY-MM-DD (default 2026-08-15)")
     args = p.parse_args()
-    verify()                      # fail loudly if the rule table ever drifts from the documents
+    verify()
     chat = Conversation()
     if args.question:
         print(chat.ask(args.question, args.date))

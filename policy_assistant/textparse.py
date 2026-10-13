@@ -16,11 +16,11 @@ LAKH, CRORE = Decimal(100000), Decimal(10000000)
 @dataclass(frozen=True)
 class Money:
     value: Decimal
-    role: str                 # "amount" (a payment), "volume" (monthly volume) or "reference" (e.g. the Rs.15 cap)
-    direction: str | None     # "gt" (above/over), "le" (up to/below) or None
+    role: str
+    direction: str | None
 
 
-# "Rs.4,000", "₹1,50,000", "1.5 lakh", "4000 rupees". A bare number like "3" is NOT money.
+
 _MONEY = re.compile(
     r"(?:(?<![a-z])(?P<cur>₹|rs\.?|inr))?\s*(?P<num>\d[\d,]*(?:\.\d+)?)\s*"
     r"(?P<unit>lakhs?|lacs?|crores?)?(?:\s*(?P<rup>rupees|rs\b))?",
@@ -48,7 +48,7 @@ def find_money(text: str) -> list[Money]:
             direction = "gt"
         elif re.search(r"\b(below|under|less than|up to|upto|at most)\W*$", before):
             direction = "le"
-        # "the Rs.15 MDR cap" is a reference to the cap, not a payment amount
+
         is_cap_ref = bool(re.match(r"\s*(mdr |fee )?cap\b", after))
         role = "volume" if is_volume else ("reference" if is_cap_ref else "amount")
         found.append(Money(value, role, direction))
@@ -68,7 +68,7 @@ def detect_tier(low: str, money: list[Money], context: dict) -> str | None:
             if m.value <= threshold:
                 return "small"
         else:
-            return "large" if m.value > threshold else "small"   # exactly 10 lakh is "up to" => small
+            return "large" if m.value > threshold else "small"
     if re.search(r"\b(large|big|bigger)\b", low):
         return "large"
     if re.search(r"\bsmall\b", low):

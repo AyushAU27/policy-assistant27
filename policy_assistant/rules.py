@@ -15,11 +15,11 @@ from decimal import Decimal
 
 from . import documents as D
 
-JAN1 = date(2026, 1, 1)    # master v1 effective date
+JAN1 = date(2026, 1, 1)
 JUL31 = date(2026, 7, 31)
-AUG1 = date(2026, 8, 1)    # circular effective date (default)
+AUG1 = date(2026, 8, 1)
 AUG31 = date(2026, 8, 31)
-SEP1 = date(2026, 9, 1)    # circular clause D has its own, later, effective date
+SEP1 = date(2026, 9, 1)
 
 
 class NotInForce(Exception):
@@ -30,11 +30,11 @@ class NotInForce(Exception):
 class Version:
     value: object
     start: date
-    end: date | None          # last day it applies (inclusive); None = still open
+    end: date | None
     doc: str
     clause: str
-    evidence: str             # text that must appear in the clause
-    summary: str              # human wording, used in explanations
+    evidence: str
+    summary: str
 
     @property
     def ref(self) -> str:
@@ -43,7 +43,7 @@ class Version:
         return f"Circular MS/2026/17 clause {self.clause}"
 
 
-def V(*a):  # tiny helper to keep the table below readable
+def V(*a):
     return Version(*a)
 
 

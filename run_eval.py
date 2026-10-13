@@ -27,7 +27,7 @@ def main() -> int:
         status_ok = a.status == c["expected_status"]
         facts_missing = [p for p in c["must_contain"] if p.lower() not in a.answer.lower()]
         cites_missing = [e for e in c["expected_citations"] if tuple(e) not in got]
-        real = all(corpus.text(d, cl) for d, cl in got)       # raises if a citation is invented
+        real = all(corpus.text(d, cl) for d, cl in got)
         ok = status_ok and not facts_missing and not cites_missing and real
         rows.append((c["id"], "adv" if c["adversarial"] else "", a.status, status_ok,
                      not facts_missing, not cites_missing, ok))
