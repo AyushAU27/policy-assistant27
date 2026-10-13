@@ -7,6 +7,7 @@ AI assistance was used during development and verification.
 - Helped inspect the assignment and repository requirements.
 - Helped review the deterministic document-loading, dated-rule, parsing, routing,
   arithmetic, citation, CLI, test, and evaluation code.
+- Helped in generating the code for the necessary requirements.
 - Helped run the unit tests, evaluation suite, Python compilation check, and CLI
   smoke test.
 - Helped identify documentation and submission requirements that needed to be
