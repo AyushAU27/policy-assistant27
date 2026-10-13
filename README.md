@@ -52,4 +52,5 @@ No LLM is used, so answers are identical on every run.
 
 ## Files
 
-`DECISIONS.md` (every ambiguity and my choice) / `WHERE_IT_BREAKS.md` / `eval.json` / `run_eval.py`
+`DECISIONS.md` (every ambiguity and my choice) / `AI_USAGE.md` (honest development disclosure) /
+`WHERE_IT_BREAKS.md` / `eval.json` / `run_eval.py`
